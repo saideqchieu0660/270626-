@@ -47,7 +47,7 @@ import TeacherDashboard from "./pages/TeacherDashboard";
 import StudyRoom from "./pages/StudyRoom";
 import CoStudyRoom from "./pages/CoStudyRoom";
 import SetupProfileScreen from "./pages/SetupProfileScreen";
-// import ApiHealthMonitor from "./pages/ApiHealthMonitor";
+import { NextGenMonitorGrid } from "./components/dashboard/NextGenMonitorGrid";
 import VibeApiHealthMonitor from "./vibe-sandbox/VibeApiHealthMonitor";
 import AdminCreateCards from "./pages/AdminCreateCards";
 import VerifyEmailScreen from "./components/VerifyEmailScreen";
@@ -2200,7 +2200,7 @@ export default function App() {
               path="/admin/monitor"
               element={
                 <PageWrapper>
-                  <ApiHealthMonitor />
+                  <NextGenMonitorGrid />
                 </PageWrapper>
               }
             />
