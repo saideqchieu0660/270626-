@@ -1,0 +1,85 @@
+src/pages/AdminCreateCards.tsx:466:                          <option key={s} value={s}>
+src/pages/AdminCreateCards.tsx:654:                      key={`${card.id || "card"}-${idx}`}
+src/pages/ApiHealthMonitor.tsx:1297:                      key={k.index}
+src/pages/ApiHealthMonitor.tsx:1433:                      key={k.index}
+src/pages/ApiHealthMonitor.tsx:1566:                        key={k.index}
+src/pages/ApiHealthMonitor.tsx:1883:                      key={log.id ? `${log.id}-${idx}` : `log-${idx}`}
+src/pages/CoStudyRoom.tsx:320:                      <option key={t.id} value={t.id}>{t.name}</option>
+src/pages/CoStudyRoom.tsx:343:                    <option key={t.id} value={t.id}>{t.name}</option>
+src/pages/CoStudyRoom.tsx:377:                           <div key={t.id} className="flex items-start gap-2 group">
+src/pages/CoStudyRoom.tsx:476:                     key={user.id || `anon-${idx}`} 
+src/pages/SetupProfileScreen.tsx:353:                  <tr key={key} className="border-b border-black/5 dark:border-white/5 last:border-0">
+src/pages/StudentDashboard.tsx:2513:                  key={tab.id}
+src/pages/StudentDashboard.tsx:2845:                      key={deck.id ? `${deck.id}-${idx}` : `deck-${idx}`}
+src/pages/StudentDashboard.tsx:2879:                    key={count}
+src/pages/StudentDashboard.tsx:2974:                    key={b.id ? `${b.id}-${idx}` : `b-${idx}`}
+src/pages/StudentDashboard.tsx:3768:                        key={member.id || `member-${i}`}
+src/pages/StudentDashboard.tsx:3956:                        key={u.id ? `${u.id}-${pos}` : `user-${pos}`}
+src/pages/StudentDashboard.tsx:4115:                          key={u.id ? `${u.id}-${index}` : `user-${index}`}
+src/pages/StudentDashboard.tsx:6512:                                key={border.id}
+src/pages/StudentDashboard.tsx:6555:                                  key={titleObj.id}
+src/pages/StudentDashboard.tsx:6752:                                      key={`env-${key}`}
+src/pages/StudentDashboard.tsx:7469:                          key={idx}
+src/pages/StudentDashboard.tsx:7483:                        key={`empty-${idx}`}
+src/pages/StudentDashboard.tsx:7499:                          key={dayNum}
+src/pages/StudentDashboard.tsx:7562:                        key={record.id}
+src/pages/StudentDashboard.tsx:7830:                        key={count}
+src/pages/StudentDashboard.tsx:7918:                      key={deck.id ? `${deck.id}-${idx}` : `deck-${idx}`}
+src/pages/StudentDashboard.tsx:8094:                        key={`${card.id}-${idx}`}
+src/pages/StudyRoom.tsx:2437:                          key={idx}
+src/pages/StudyRoom.tsx:3632:                              <option key={s} value={s}>
+src/pages/StudyRoom.tsx:3837:                      key={card.id ? `${card.id}-${idx}` : `card-${idx}`}
+src/pages/TeacherDashboard.tsx:1129:                        <li key={idx} className="text-sm">
+src/pages/TeacherDashboard.tsx:1144:                        <li key={idx} className="text-sm">
+src/pages/TeacherDashboard.tsx:1222:                                    <option key={s} value={s}>
+src/pages/TeacherDashboard.tsx:1340:                            key={u.id ? `${u.id}-${idx}` : `user-${idx}`}
+src/pages/TeacherDashboard.tsx:1538:                      key={u.id ? `${u.id}-${index}` : `user-${index}`}
+src/pages/TeacherDashboard.tsx:1870:                              key={subject}
+src/pages/TeacherDashboard.tsx:2021:                        <div key={subject} className="space-y-3 relative">
+src/pages/TeacherDashboard.tsx:2153:                                key={
+src/pages/TeacherDashboard.tsx:2315:                      key={wc.id}
+src/pages/TeacherDashboard.tsx:2702:                    <option key={subj} value={subj}>
+src/components/AchievementCardExport.tsx:167:             <div key={idx} className="bg-zinc-900 border border-zinc-800 p-6 rounded-3xl flex items-start gap-4">
+src/components/AchievementCardExport.tsx:347:                        key={currentBadge?.id || "empty"}
+src/components/Agent3Widget.tsx:856:                              key={`${set.id || "set"}-${index}`}
+src/components/Agent3Widget.tsx:886:                                  key={`${set.id || "set"}-${index}`}
+src/components/Agent3Widget.tsx:917:                              key={cat}
+src/components/Agent3Widget.tsx:1277:      <div key={`${node.id || "node"}-${index}-${depth}`} className="flex flex-col items-start pl-4 border-l border-zinc-200 dark:border-zinc-800/80 my-1.5 py-1 relative w-full">
+src/components/Breadcrumbs.tsx:31:          <React.Fragment key={to}>
+src/components/CinematicContainer.tsx:65:            key={idx} 
+src/components/CustomDeckSelect.tsx:75:             <div key={subject}>
+src/components/CustomDeckSelect.tsx:95:                       key={d.id}
+src/components/DeckList.tsx:371:                    key={search}
+src/components/DeckList.tsx:408:                <div key={subject} className="space-y-8 animate-in fade-in duration-300">
+src/components/DeckList.tsx:618:                        <TiltCard key={`${deck.id || "deck"}-${idx}`} delayIdx={idx} className={cn("w-[85vw] sm:w-[380px] shrink-0 snap-start h-auto", isOfflineUnavailable && "opacity-40 grayscale pointer-events-none")}>
+src/components/DeckList.tsx:719:                  <TiltCard key={`${deck.id || "deck"}-${idx}`} delayIdx={idx} className={cn("", isOfflineUnavailable && "opacity-40 grayscale pointer-events-none")}>
+src/components/DocumentConverter.tsx:3093:                          key={`${card.id || "card"}-${idx}`}
+src/components/DocumentConverter.tsx:3395:                          <option key={idx} value={cat}>
+src/components/DocumentConverter.tsx:3687:                  <div key={idx} className={cn("leading-relaxed", colorClass)}>
+src/components/DocumentConverter.tsx:3761:                      <option key={idx + 1} value={idx + 1}>
+src/components/DocumentConverter.tsx:3789:                  key={c.id || `card-${startIndex + i}`}
+src/components/ExportStudyReport.tsx:633:                          <div key={d.id} className="p-3 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 flex flex-col justify-between">
+src/components/ExportStudyReport.tsx:668:                            <tr key={c.id || `fallback-${index}`} className="hover:bg-zinc-50/50 dark:hover:bg-zinc-900/50">
+src/components/FramerFireworks.tsx:38:            key={`${p.id || "p"}-${index}`}
+src/components/GlobalActivityFeed.tsx:126:                key={emoji}
+src/components/GlobalActivityFeed.tsx:179:                            key={emoji}
+src/components/GlobalActivityFeed.tsx:633:                key={`${p.id || "pinned"}-${idx}`}
+src/components/GlobalActivityFeed.tsx:734:                key={`${item.id || "feed"}-${idx}`}
+src/components/GlobalErrorToast.tsx:181:            key={error.id || index}
+src/components/InteractiveTutorial.tsx:176:               key={idx} 
+src/components/ManualFlashcardImporter.tsx:1787:                          <option key={idx} value={cat}>
+src/components/ManualFlashcardImporter.tsx:1976:                  <div key={lIdx} className="text-xs leading-relaxed">
+src/components/ManualFlashcardImporter.tsx:2074:                          key={`${log.id || "log"}-${idx}`}
+src/components/ManualFlashcardImporter.tsx:2347:                    key={c.id || `fallback-${index}`}
+src/components/ManualFlashcardImporter.tsx:2455:                      key={idx}
+src/components/ManualFlashcardImporter.tsx:2609:                        key={idx}
+src/components/ManualFlashcardImporter.tsx:2979:                              <option key={idx} value={cat}>
+src/components/ManualFlashcardImporter.tsx:3048:                    key={`${card.id || "card"}-${idx}`}
+src/components/ParticleBackground.tsx:24:          key={star.id}
+src/components/PerfDashboardGrid.tsx:126:              key={metric.title}
+src/components/ShortcutsHelpModal.tsx:145:                    key={item.key} 
+src/components/SkillTreeGraph.tsx:317:                <option key={sub} value={sub}>{sub}</option>
+src/components/StudentBadges.tsx:905:            key={cat.id}
+src/components/StudentBadges.tsx:935:                key={badge.id}
+src/components/TopPerformersWidget.tsx:150:              key={`${u.id || "user"}-${index}`}
+src/components/VirtualizedFlashcardList.tsx:220:              key={`${card.id || "card"}-${index}`}

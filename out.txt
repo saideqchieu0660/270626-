@@ -1,0 +1,21 @@
+src/components/DocumentConverter.tsx:                          key={`${card.id || "card"}-${idx}`}
+src/components/DocumentConverter.tsx:                  key={c.id || `card-${startIndex + i}`}
+src/components/VirtualizedFlashcardList.tsx:              key={`${card.id || "card"}-${idx}`}
+src/components/TopPerformersWidget.tsx:              key={`${u.id || "user"}-${index}`}
+src/components/ManualFlashcardImporter.tsx:                          key={`${log.id || "log"}-${idx}`}
+src/components/ManualFlashcardImporter.tsx:                    key={c.id || `fallback-${index}`}
+src/components/ManualFlashcardImporter.tsx:                    key={`${card.id || "card"}-${idx}`}
+src/components/DeckList.tsx:                        <TiltCard key={`${deck.id || "deck"}-${idx}`} delayIdx={idx} className={cn("w-[85vw] sm:w-[380px] shrink-0 snap-start h-auto", isOfflineUnavailable && "opacity-40 grayscale pointer-events-none")}>
+src/components/DeckList.tsx:                  <TiltCard key={`${deck.id || "deck"}-${idx}`} delayIdx={idx} className={cn("", isOfflineUnavailable && "opacity-40 grayscale pointer-events-none")}>
+src/components/GlobalErrorToast.tsx:            key={error.id || index}
+src/components/ExportStudyReport.tsx:                            <tr key={c.id || `fallback-${index}`} className="hover:bg-zinc-50/50 dark:hover:bg-zinc-900/50">
+src/components/FramerFireworks.tsx:            key={`${p.id || "p"}-${index}`}
+src/components/Agent3Widget.tsx:                              key={`${set.id || "set"}-${index}`}
+src/components/Agent3Widget.tsx:                                  key={`${set.id || "set"}-${index}`}
+src/components/Agent3Widget.tsx:      <div key={`${node.id || "node"}-${index}`} className="flex flex-col items-start pl-4 border-l border-zinc-200 dark:border-zinc-800/80 my-1.5 py-1 relative w-full">
+src/components/AchievementCardExport.tsx:                        key={currentBadge?.id || index}
+src/components/GlobalActivityFeed.tsx:                key={`${p.id || "pinned"}-${idx}`}
+src/components/GlobalActivityFeed.tsx:                key={`${item.id || "feed"}-${idx}`}
+src/pages/CoStudyRoom.tsx:                     key={user.id || `anon-${idx}`} 
+src/pages/StudentDashboard.tsx:                        key={member.id || `member-${i}`}
+src/pages/AdminCreateCards.tsx:                      key={`${card.id || "card"}-${idx}`}

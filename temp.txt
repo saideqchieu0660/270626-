@@ -1,0 +1,38 @@
+      cards: manualCards.map((c, idx) => ({
+             data.cards = data.cards.map((c: any) => ({
+    return rawDecks.map((deck) => {
+        clonedDeck.cards = clonedDeck.cards.map((card) => {
+      ? dbUsers.map(u => {
+        : [...store.getUsers()].map(u => {
+        setDbUsers(prev => prev.map(u => u.id === studentToDelete.id ? { ...u, status: "disabled" } : u));
+    const allCards = decks.flatMap(d => (d.cards || []).map(c => ({ ...c, originDeckId: d.id, originDeckTitle: d.title })));
+    const hardCards = subjectDecks.flatMap(d => (d.cards || []).map(c => ({ ...c, originDeckId: d.id, originDeckTitle: d.title }))).filter(c => c.isHard === true || remindLaterCardIds.includes(c.id));
+    const allCards = subjectDecks.flatMap(d => (d.cards || []).map(c => ({ ...c, originDeckId: d.id, originDeckTitle: d.title })));
+          cardsToUse.push(...cards.map(c => ({ front: c.front, back: c.back, subject: c.subject || categoryName })));
+          weakCards.push(...cards.map(c => ({ front: c.front, back: c.back, subject: c.subject })));
+            questions = questions.map((q: any) => {
+            questions = questions.map((q: any) => {
+       return Array.from({length: 15}).map((_, i) => ({
+       return Array.from({length: 10}).map((_, i) => ({
+     return Array.from({length: 30}).map((_, i) => ({
+        ].map((tab) => {
+                         {currentQ?.options.map((opt, i) => {
+                      {decks.map(deck => {
+                      {[5, 10, 15, 20].map(count => (
+                {broadcasts.map((b) => (
+                       {activeGroup.members.map((member, i) => (
+                  {[1, 0, 2].map(pos => {
+                    {sortedUsers.slice(3).map((u, index) => {
+                      setDbUsers(prev => prev.map(item => item.id === user!.id ? { ...item, isSchoolLover: true } : item));
+                        {AVAILABLE_BORDERS.map(border => (
+                        {ALL_TITLES.map(titleObj => {
+                              setDbUsers(prev => prev.map(u => u.id === user.id ? { ...u, isSchoolLover: false } : u));
+                                setDbUsers(prev => prev.map(u => u.id === user.id ? { ...u, isSchoolLover: true } : u));
+                            {Object.entries(getEnvDiagnostics()).map(([key, data]) => (
+                     {["CN", "T2", "T3", "T4", "T5", "T6", "T7"].map((w, idx) => (
+                     {Array.from({ length: firstDayOfMonth }).map((_, idx) => (
+                     {calendarDays.map((dayNum) => {
+                       (store.getReviewHistory(user.id) || []).map((record) => (
+                    {[5, 10, 15, 20, 25, 30, 35, 40].map(count => (
+                {decks.map(deck => {
+                  remindLaterCards.map((card, idx) => {
