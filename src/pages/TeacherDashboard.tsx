@@ -43,7 +43,7 @@ import { DashboardSkeleton } from "../components/DashboardSkeleton";
 import { GlobalActivityFeed } from "../components/GlobalActivityFeed";
 import { EditDeckModal } from "../components/EditDeckModal";
 import { v4 as uuidv4 } from "uuid";
-import ApiHealthMonitor from "./ApiHealthMonitor";
+import { NextGenMonitorGrid } from "../components/dashboard/NextGenMonitorGrid";
 import { OfflineStorageProgressWidget } from "../components/OfflineStorageProgressWidget";
 
 export default function TeacherDashboard() {
@@ -1060,7 +1060,7 @@ export default function TeacherDashboard() {
 
         {showAdminMonitor && (
           <div className="glass p-6 rounded-3xl border border-orange-500/30 w-full overflow-hidden animate-in fade-in slide-in-from-top-4">
-            <ApiHealthMonitor />
+            <NextGenMonitorGrid />
           </div>
         )}
 

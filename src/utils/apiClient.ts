@@ -623,7 +623,7 @@ async function fetchOpenRouterWithBackoff(model: string, messages: any[], attemp
     }
     console.warn("[apiClient] Backend OpenRouter proxy route failed, checking client-side key fallback...", proxyErr.message || proxyErr);
     
-    const { ClientOpenRouterManager, fetchWithKeyRotation } = await import("../lib/gemini").catch(() => ({ ClientOpenRouterManager: null, fetchWithKeyRotation: null }));
+    const { ClientOpenRouterManager, fetchWithKeyRotation } = await import("../legacy_isolated/gemini").catch(() => ({ ClientOpenRouterManager: null, fetchWithKeyRotation: null }));
     
     if (ClientOpenRouterManager && ClientOpenRouterManager.getKey() !== null) {
       try {

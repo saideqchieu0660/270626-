@@ -1,5 +1,6 @@
 export const FEATURE_FLAGS = {
   PRIMITIVE_MODE: import.meta.env.VITE_PRIMITIVE_MODE === 'true' || false, 
+  ENABLE_FLASHCARD_ONLY: true,
   ENABLE_FLASHCARDS: true,
   ENABLE_STUDY_ROOM: true,
   ENABLE_CO_STUDY: true,
@@ -13,6 +14,11 @@ export const FEATURE_FLAGS = {
 };
 
 export const isFeatureEnabled = (featureKey: keyof typeof FEATURE_FLAGS) => {
+  if (FEATURE_FLAGS.ENABLE_FLASHCARD_ONLY) {
+    if (featureKey === 'ENABLE_FLASHCARDS') return true;
+    if (featureKey === 'ENABLE_FLASHCARD_ONLY') return true;
+    return false;
+  }
   if (FEATURE_FLAGS.PRIMITIVE_MODE) {
     if (featureKey === 'ENABLE_FLASHCARDS') return true;
     return false;
