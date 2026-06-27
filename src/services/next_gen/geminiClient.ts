@@ -4,25 +4,27 @@ export async function executeGeminiExtraction(
   pushLog?: (msg: string, isError?: boolean) => void
 ) {
   const url = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
-  const modelId = "models/gemini-1.5-flash";
+  const modelId = "gemini-1.5-flash";
   const payload = {
     model: modelId,
     messages: [{ role: "user", content: prompt }],
   };
 
+  const headers = {
+    "Authorization": `Bearer ${apiKey}`,
+    "Content-Type": "application/json",
+  };
+
   const res = await fetch(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
+    headers,
     body: JSON.stringify(payload),
   });
 
   if (!res.ok) {
     if (res.status === 404 && pushLog) {
       pushLog(
-        `[404 DEBUG] Failed URL: ${url} | Model Passed: ${modelId} | Payload: ${JSON.stringify(
+        `[404 DEBUG] Failed URL: ${url} | Model Passed: ${modelId} | Headers: ${JSON.stringify(headers)} | Payload: ${JSON.stringify(
           payload
         )}`,
         true

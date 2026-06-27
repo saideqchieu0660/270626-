@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Save, Settings, ShieldAlert, Cpu, Bot, MessageSquare } from "lucide-react";
+import { Save, Settings, ShieldAlert, Cpu, Bot, MessageSquare, RotateCcw } from "lucide-react";
 import { nextGenPromptManager, SystemPromptMatrix } from "../../services/next_gen/promptManager";
+import { toast } from "sonner";
 
 export function NextGenPromptEditor({ adminKey }: { adminKey: string }) {
   const [config, setConfig] = useState<SystemPromptMatrix | null>(null);
@@ -18,9 +19,21 @@ export function NextGenPromptEditor({ adminKey }: { adminKey: string }) {
 
   const handleSave = async () => {
     if (!config) return;
+    if (nextGenPromptManager.isHydrating) {
+      toast.error("Hệ thống đang tải dữ liệu, không thể lưu lúc này.");
+      return;
+    }
     setIsSaving(true);
     await nextGenPromptManager.saveToDatabase(config, adminKey);
     setIsSaving(false);
+  };
+
+  const handleRestoreDefaults = () => {
+    if (confirm("Bạn có chắc chắn muốn khôi phục toàn bộ cấu hình hệ thống prompt về mặc định ban đầu?")) {
+      const defaults = nextGenPromptManager.restoreDefaults();
+      setConfig({...defaults});
+      toast.success("Đã khôi phục cấu hình gốc. Vui lòng nhấn Lưu Hệ Thống để đồng bộ.");
+    }
   };
 
   const handleChange = (key: keyof SystemPromptMatrix, value: string) => {
@@ -53,13 +66,22 @@ export function NextGenPromptEditor({ adminKey }: { adminKey: string }) {
           </h3>
           <p className="text-zinc-500 text-sm mt-1">Cấu hình prompt và bộ lọc từ ngữ cho Unified Ingestion Engine V2 và các Agent.</p>
         </div>
-        <button
-          onClick={handleSave}
-          disabled={isSaving}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all disabled:opacity-50"
-        >
-          {isSaving ? <span className="animate-pulse">Đang đồng bộ...</span> : <><Save className="w-4 h-4" /> Đồng bộ Hệ thống (Save & Sync)</>}
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={handleRestoreDefaults}
+            disabled={isSaving}
+            className="bg-zinc-100 hover:bg-zinc-200 text-zinc-700 px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            <RotateCcw className="w-4 h-4" /> Khôi phục cấu hình gốc
+          </button>
+          <button
+            onClick={handleSave}
+            disabled={isSaving}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 transition-all disabled:opacity-50"
+          >
+            {isSaving ? <span className="animate-pulse">Đang đồng bộ...</span> : <><Save className="w-4 h-4" /> Đồng bộ Hệ thống (Save & Sync)</>}
+          </button>
+        </div>
       </div>
 
       <div className="space-y-8">

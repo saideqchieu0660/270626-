@@ -10,19 +10,21 @@ export async function executeCerebrasExtraction(
     messages: [{ role: "user", content: prompt }],
   };
 
+  const headers = {
+    "Authorization": `Bearer ${apiKey}`,
+    "Content-Type": "application/json",
+  };
+
   const res = await fetch(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
+    headers,
     body: JSON.stringify(payload),
   });
 
   if (!res.ok) {
     if (res.status === 404 && pushLog) {
       pushLog(
-        `[404 DEBUG] Failed URL: ${url} | Model Passed: ${modelId} | Payload: ${JSON.stringify(
+        `[404 DEBUG] Failed URL: ${url} | Model Passed: ${modelId} | Headers: ${JSON.stringify(headers)} | Payload: ${JSON.stringify(
           payload
         )}`,
         true
