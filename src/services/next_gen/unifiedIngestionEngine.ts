@@ -2,6 +2,9 @@ import { nextGenRotationEngine, KeyStatus } from "./hybridRotationEngine";
 import { toast } from "sonner";
 import { nextGenPromptManager } from "./promptManager";
 
+import { executeCerebrasExtraction } from "./cerebrasClient";
+import { executeGeminiExtraction } from "./geminiClient";
+
 export interface IngestionChunk {
   id: string;
   text: string;
@@ -134,7 +137,7 @@ class UnifiedIngestionEngine {
 
         nextGenRotationEngine.markKeyUsed(keyStatus.key);
 
-        const cards = await this.executeExtraction(text, keyStatus);
+        const cards = await this.executeExtraction(text, keyStatus, pushLog);
         
         if (!this.validateExtraction(cards)) {
           throw new Error("INVALID_RESPONSE_SCHEMA");
@@ -246,51 +249,32 @@ class UnifiedIngestionEngine {
     return true;
   }
 
-  private async executeExtraction(text: string, keyStatus: KeyStatus): Promise<IngestedCard[]> {
-    const basePrompt = nextGenPromptManager.getIngestionPrompt();
+  private async executeExtraction(text: string, keyStatus: KeyStatus, pushLog?: (msg: string, isError?: boolean) => void): Promise<IngestedCard[]> {
+    let basePrompt = nextGenPromptManager.getIngestionPrompt();
+    if (!basePrompt || basePrompt.trim() === "") {
+        basePrompt = `Extract flashcards from the following text. Return a JSON array of objects exactly like this:
+[
+  { "front": "word/phrase", "back": "translation/meaning", "ipa": "pronunciation", "example": "example sentence" }
+]
+Only output the raw JSON array, no extra text.`;
+    }
     const prompt = `${basePrompt}\nText: ${text}`;
 
-    if (keyStatus.provider === "cerebras") {
-      const res = await fetch("https://api.cerebras.ai/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${keyStatus.key}`
-        },
-        body: JSON.stringify({
-          model: "llama3.1-8b",
-          messages: [{ role: "user", content: prompt }]
-        })
-      });
-
-      if (!res.ok) {
-        nextGenRotationEngine.reportError(keyStatus.key, res.status);
-        throw new Error(`Cerebras API Error: ${res.status}`);
+    try {
+      let content = "";
+      if (keyStatus.provider === "cerebras") {
+        content = await executeCerebrasExtraction(prompt, keyStatus.key, pushLog);
+      } else {
+        content = await executeGeminiExtraction(prompt, keyStatus.key, pushLog);
       }
-
-      const data = await res.json();
-      return this.parseResponse(data.choices[0].message.content);
-
-    } else {
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/openai/chat/completions`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${keyStatus.key}`
-        },
-        body: JSON.stringify({
-          model: "gemini-1.5-flash",
-          messages: [{ role: "user", content: prompt }]
-        })
-      });
-
-      if (!res.ok) {
-        nextGenRotationEngine.reportError(keyStatus.key, res.status);
-        throw new Error(`Gemini API Error: ${res.status}`);
+      return this.parseResponse(content);
+    } catch (error: any) {
+      if (error.status) {
+        nextGenRotationEngine.reportError(keyStatus.key, error.status);
+      } else {
+        nextGenRotationEngine.reportError(keyStatus.key, 500);
       }
-
-      const data = await res.json();
-      return this.parseResponse(data.choices[0].message.content);
+      throw error;
     }
   }
 
