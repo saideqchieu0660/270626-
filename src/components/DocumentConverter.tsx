@@ -50,6 +50,7 @@ import {
 } from "firebase/firestore";
 import { safeRequest } from "../utils/apiClient";
 import { splitIntoChunks } from "../utils/textProcessor";
+import { nextGenIngestionEngine } from "../services/next_gen/unifiedIngestionEngine";
 
 // 1. Unified Client-Side Clean-up utility
 function isCleanHumanLine(line: string): boolean {
@@ -1216,59 +1217,23 @@ ${textChunk}`,
                 throw new Error("Dữ liệu stream trống rỗng.");
               }
             } catch (streamErr: any) {
-              pushLog(
-                `⚠️ [Direct Stream Thất bại] ${streamErr.message || streamErr}. Đang tự động chuyển sang luồng truyền thống vững chãi...`,
-                true,
-              );
-
-              const rawResponse = await safeRequest(
-                "/api/automation/process-chunk",
-                {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    textChunk: task.content,
-                    isDegraded: isDegraded,
-                    targetMin: calculatedMin,
-                    targetMax: calculatedMax,
-                  }),
-                  signal: controller.signal,
-                },
-              );
+              pushLog(`⚠️ [NEXT-GEN ENGINE ACTIVATED] Fallback triggered. Migrating payload away from legacy OpenRouter...`, true);
 
               clearTimeout(timeoutId);
 
-              if (!rawResponse.ok) {
-                let errorMsg = `Server response error: ${rawResponse.status}`;
-                try {
-                  const errData = await rawResponse.json();
-                  errorMsg = errData.message || errData.error || errorMsg;
-                } catch (e) {}
-
-                // Bỏ popup báo lỗi để Engine âm thầm kiên trì thử lại (Zero Data Loss)
-                // window.dispatchEvent(
-                //   new CustomEvent("global-api-error", {
-                //     detail: {
-                //       message: errorMsg,
-                //       path: "/api/automation/process-chunk",
-                //     },
-                //   }),
-                // );
-
-                const controlledError = new Error(errorMsg) as any;
+              try {
+                const nextGenCards = await nextGenIngestionEngine.processSingleChunkSync(
+                  task.content,
+                  pushLog
+                );
+                
+                cardsInChunk = nextGenCards;
+                success = true;
+                pushLog(`✅ [PROGRESS] Segment ${i + 1}/${tasks.length} successfully converted to JSON flashcards.`);
+              } catch (engineErr: any) {
+                const controlledError = new Error(engineErr.message) as any;
                 controlledError.handled = true;
                 throw controlledError;
-              }
-
-              const resData = await rawResponse.json();
-              if (resData && resData.success && Array.isArray(resData.cards)) {
-                cardsInChunk = resData.cards;
-                success = true;
-              } else {
-                throw new Error(
-                  resData.message ||
-                    "Đầu ra không chứa mảng thẻ học hợp chuẩn.",
-                );
               }
             }
           } catch (err: any) {

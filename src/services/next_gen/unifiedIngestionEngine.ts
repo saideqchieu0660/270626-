@@ -110,8 +110,51 @@ class UnifiedIngestionEngine {
     this.isRunning = false;
   }
   
-  public resume() {
-    this.start();
+  public async processSingleChunkSync(text: string, pushLog?: (msg: string, isError?: boolean) => void): Promise<IngestedCard[]> {
+    if (!nextGenPromptManager.isContentSafe(text)) {
+      throw new Error("Policy Violation: Nội dung vi phạm chính sách hoặc chứa lệnh không hợp lệ.");
+    }
+
+    let retryCount = 0;
+    const maxRetries = 3;
+
+    while (retryCount < maxRetries) {
+      try {
+        await this.enforceThrottlingDelay();
+
+        const keyStatus = nextGenRotationEngine.getAvailableKey();
+        if (!keyStatus) {
+          throw new Error("NO_KEYS_AVAILABLE");
+        }
+
+        if (pushLog) {
+          pushLog(`[HYBRID POOL] Selected active provider key: ${keyStatus.maskedKey} (Status: READY)`);
+          pushLog(`[THROTTLE] Enforcing 10-12 seconds interval protection...`);
+        }
+
+        nextGenRotationEngine.markKeyUsed(keyStatus.key);
+
+        const cards = await this.executeExtraction(text, keyStatus);
+        
+        if (!this.validateExtraction(cards)) {
+          throw new Error("INVALID_RESPONSE_SCHEMA");
+        }
+        
+        return cards;
+      } catch (err: any) {
+        retryCount++;
+        if (err.message === "NO_KEYS_AVAILABLE") {
+          throw err;
+        }
+        if (pushLog) {
+          pushLog(`⚠️ Lỗi xử lý khối (Thử lại ${retryCount}/${maxRetries}): ${err.message}`, true);
+        }
+        if (retryCount >= maxRetries) {
+          throw err;
+        }
+      }
+    }
+    throw new Error("Quá số lần thử lại.");
   }
 
   private async enforceThrottlingDelay() {

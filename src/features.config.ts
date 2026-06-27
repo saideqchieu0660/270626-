@@ -1,5 +1,5 @@
 export const FEATURE_FLAGS = {
-  PRIMITIVE_MODE: import.meta.env.VITE_PRIMITIVE_MODE === 'true' || false, 
+  PRIMITIVE_MODE: false, 
   ENABLE_FLASHCARDS: true,
   ENABLE_STUDY_ROOM: true,
   ENABLE_CO_STUDY: true,
