@@ -267,7 +267,7 @@ Only output the raw JSON array, no extra text.`;
       } else {
         content = await executeGeminiExtraction(prompt, keyStatus.key, pushLog);
       }
-      return this.parseResponse(content);
+      return this.parseResponse(content, pushLog);
     } catch (error: any) {
       if (error.status) {
         nextGenRotationEngine.reportError(keyStatus.key, error.status);
@@ -278,21 +278,25 @@ Only output the raw JSON array, no extra text.`;
     }
   }
 
-  private parseResponse(content: string): IngestedCard[] {
+  private parseResponse(content: string, pushLog?: (msg: string, isError?: boolean) => void): IngestedCard[] {
+    let jsonStr = content.trim();
+    // Strip markdown code fences if present
+    if (jsonStr.startsWith("```")) {
+      jsonStr = jsonStr.replace(/^```[a-zA-Z]*\n?/, "").replace(/```$/, "").trim();
+    }
+    
     try {
-      let jsonStr = content.trim();
-      if (jsonStr.startsWith("```json")) {
-        jsonStr = jsonStr.replace(/```json/g, "").replace(/```/g, "").trim();
-      }
-      
       const parsed = JSON.parse(jsonStr);
       if (Array.isArray(parsed)) return parsed;
       if (parsed.cards && Array.isArray(parsed.cards)) return parsed.cards;
       if (parsed.flashcards && Array.isArray(parsed.flashcards)) return parsed.flashcards;
       
       throw new Error("Unknown schema");
-    } catch (e) {
-      throw new Error("JSON Parse Error");
+    } catch (e: any) {
+      if (pushLog) {
+        pushLog(`[PARSE ERROR] Raw response: ${content}`, true);
+      }
+      throw new Error("JSON Parse Error: " + e.message);
     }
   }
 }
