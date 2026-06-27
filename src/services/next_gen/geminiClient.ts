@@ -24,9 +24,7 @@ export async function executeGeminiExtraction(
   if (!res.ok) {
     if (res.status === 404 && pushLog) {
       pushLog(
-        `[404 DEBUG] Failed URL: ${url} | Model Passed: ${modelId} | Headers: ${JSON.stringify(headers)} | Payload: ${JSON.stringify(
-          payload
-        )}`,
+        `[404 DEBUG] Failed URL: ${url} | Model Passed: ${modelId} | Headers: ${JSON.stringify(headers)} | Payload: ${JSON.stringify(payload)}`,
         true
       );
     }
