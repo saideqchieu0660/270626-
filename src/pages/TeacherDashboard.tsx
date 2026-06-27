@@ -44,6 +44,7 @@ import { GlobalActivityFeed } from "../components/GlobalActivityFeed";
 import { EditDeckModal } from "../components/EditDeckModal";
 import { v4 as uuidv4 } from "uuid";
 import { NextGenMonitorGrid } from "../components/dashboard/NextGenMonitorGrid";
+import { NextGenPromptEditor } from "../components/dashboard/NextGenPromptEditor";
 import { OfflineStorageProgressWidget } from "../components/OfflineStorageProgressWidget";
 
 export default function TeacherDashboard() {
@@ -1059,8 +1060,9 @@ export default function TeacherDashboard() {
         )}
 
         {showAdminMonitor && (
-          <div className="glass p-6 rounded-3xl border border-orange-500/30 w-full overflow-hidden animate-in fade-in slide-in-from-top-4">
+          <div className="glass p-6 rounded-3xl border border-orange-500/30 w-full overflow-hidden animate-in fade-in slide-in-from-top-4 space-y-6">
             <NextGenMonitorGrid />
+            <NextGenPromptEditor adminKey={adminKey} />
           </div>
         )}
 

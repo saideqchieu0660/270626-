@@ -1,32 +1,6 @@
 import { nextGenRotationEngine, KeyStatus } from "./hybridRotationEngine";
 import { toast } from "sonner";
-
-const SAFETY_PATTERNS = [
-  /ignore all previous instructions/i,
-  /system override/i,
-  /forget your previous prompts/i,
-  /bypass safety/i,
-  /you are now a/i,
-  /act as a/i,
-  /\bfuck\b/i,
-  /\bshit\b/i,
-  /\bbitch\b/i,
-  /\basshole\b/i,
-  /\bđụ\b/i,
-  /\bđịt\b/i,
-  /\blồn\b/i,
-  /\bcặc\b/i,
-  /\bchó đẻ\b/i
-];
-
-function checkContentSafety(text: string): boolean {
-  for (const pattern of SAFETY_PATTERNS) {
-    if (pattern.test(text)) {
-      return false;
-    }
-  }
-  return true;
-}
+import { nextGenPromptManager } from "./promptManager";
 
 export interface IngestionChunk {
   id: string;
@@ -158,7 +132,7 @@ class UnifiedIngestionEngine {
     const chunk = this.queue.shift();
     if (!chunk) return;
 
-    if (!checkContentSafety(chunk.text)) {
+    if (!nextGenPromptManager.isContentSafe(chunk.text)) {
       toast.error("Policy Violation: Nội dung vi phạm chính sách hoặc chứa lệnh không hợp lệ.");
       this.failedChunks.push(chunk);
       this.notifyState();
@@ -230,12 +204,8 @@ class UnifiedIngestionEngine {
   }
 
   private async executeExtraction(text: string, keyStatus: KeyStatus): Promise<IngestedCard[]> {
-    const prompt = `Extract flashcards from the following text. Return a JSON array of objects exactly like this:
-[
-  { "front": "word/phrase", "back": "translation/meaning", "ipa": "pronunciation", "example": "example sentence" }
-]
-Only output the raw JSON array, no extra text.
-Text: ${text}`;
+    const basePrompt = nextGenPromptManager.getIngestionPrompt();
+    const prompt = `${basePrompt}\nText: ${text}`;
 
     if (keyStatus.provider === "cerebras") {
       const res = await fetch("https://api.cerebras.ai/v1/chat/completions", {
