@@ -4,7 +4,7 @@ export async function executeCerebrasExtraction(
   pushLog?: (msg: string, isError?: boolean) => void
 ) {
   const url = "https://api.cerebras.ai/v1/chat/completions";
-  const modelId = "llama3.1-8b";
+  const modelId = "llama3.1-8b-instruct";
   const payload = {
     model: modelId,
     messages: [{ role: "user", content: prompt }],
